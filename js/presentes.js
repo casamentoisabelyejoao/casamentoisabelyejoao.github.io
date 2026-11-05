@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const state = {
     category: "Todos",
     search: "",
-    selected: [],       // [{ id, name }] vindo do banco
+    selected: [],       // [{ id }] presentes já escolhidos, vindo do banco
     own: loadOwn(),     // { giftId: token } das escolhas feitas neste navegador
     pending: null,      // { id, name, cancel }
     busy: false,
@@ -55,11 +55,10 @@ document.addEventListener("DOMContentLoaded", () => {
     empty.hidden = items.length > 0;
     grid.innerHTML = items.map(item => {
       const num = String(item.id).padStart(2, "0");
-      const selection = state.selected.find(row => row.id === item.id);
-      const isSelected = Boolean(selection);
+      const isSelected = state.selected.some(row => row.id === item.id);
       const isOwn = Boolean(state.own[item.id]) && isSelected;
       const label = isOwn ? "Cancelar escolha" : isSelected ? "Já escolhido" : "Escolher presente";
-      const status = isOwn ? "Escolhido por você" : isSelected ? `Escolhido por ${escapeHtml(selection.name || "um convidado")}` : "Disponível";
+      const status = isOwn ? "Escolhido por você" : isSelected ? "Presente já selecionado" : "Disponível";
       return `<article class="gift-item">
         <span class="gift-number">${num}</span>
         <img class="gift-image" src="assets/gifts/gift-${num}.jpg" alt="${escapeHtml(item.name)}" width="384" height="274" loading="lazy">
@@ -74,7 +73,8 @@ document.addEventListener("DOMContentLoaded", () => {
   async function loadSelections() {
     try {
       const rows = await rpc("list_selected_gifts");
-      state.selected = (rows ?? []).map(row => ({ id: row.gift_id, name: row.guest_name }));
+      // Só o número do presente é usado: o nome de quem escolheu fica visível apenas para os administradores.
+      state.selected = (rows ?? []).map(row => ({ id: row.gift_id }));
     } catch {
       setFeedback("Não foi possível consultar as escolhas. Tente novamente.");
     }
@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dialogTitle.textContent = cancel ? "Cancelar escolha?" : "Escolher este presente?";
     dialogDesc.innerHTML = `<strong>${escapeHtml(gift.name)}</strong><br>${cancel
       ? "O presente ficará disponível para outros convidados."
-      : "O presente ficará marcado como escolhido para os demais convidados. Você pode cancelar sua escolha neste navegador."}`;
+      : "O presente ficará marcado como selecionado para os demais convidados. Seu nome ficará visível apenas para os noivos. Você pode cancelar sua escolha neste navegador."}`;
     nameField.hidden = cancel;
     nameInput.value = "";
     dialogFeedback.hidden = true;
