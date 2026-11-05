@@ -209,6 +209,11 @@ em.amp { display: inline-block; font-size: .9em; }
 
 /* Convite sem o quadro branco: o texto fica direto sobre o papel da foto.
    A foto é ampliada um pouco e o texto sobe, para não passar por cima das flores dos cantos. */
-.invitation-letter img { transform: scale(1.15); }
-.letter-copy { padding-bottom: 34%; gap: 5px; }
+.invitation-letter img { transform: scale(1.25); }
+.letter-copy { padding-bottom: 32%; gap: 11px; }
+.letter-copy > p.letter-motto, .letter-copy > p.letter-closing { line-height: 1.35; }
 .letter-copy > p.letter-closing { max-width: 210px; }
+@media (min-height: 1050px) and (min-width: 701px) { .letter-copy { padding-bottom: 26%; gap: 16px; } }
+@media (max-width: 700px) { .letter-copy { padding-bottom: 32%; gap: 10px; } }
+@media (max-width: 400px) { .letter-copy { gap: 8px; } }
+@media (max-width: 365px) { .letter-copy { padding-bottom: 30%; gap: 6px; } }
