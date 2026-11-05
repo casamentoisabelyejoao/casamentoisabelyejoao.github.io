@@ -1,8 +1,5 @@
-// Conexão com o banco de dados (Supabase) do site original.
-// A chave "publishable" é pública por natureza: o site original também a envia ao navegador.
-window.SUPABASE_URL = "https://luubdzslmwophqohyvzw.supabase.co";
-window.SUPABASE_KEY = "sb_publishable_vWnjA9gwEQ5Ks42hOaqFWw_gXUj5lFJ";
-
-// Endereço da área admin do site no Lovable (ex.: "https://seu-site.lovable.app/admin").
-// Quando preenchido, a página admin.html mostra um botão que leva até lá.
-window.ADMIN_URL = "https://isabelyexavier.lovable.app/admin";
+// Conexão com o banco de dados próprio do site (Supabase).
+// A chave "publishable" é pública por natureza: ela só permite usar as funções
+// liberadas em supabase/setup.sql. Nunca coloque aqui a "secret key".
+window.SUPABASE_URL = "https://obexjarenbmtwyxvmpku.supabase.co";
+window.SUPABASE_KEY = "sb_publishable_v9ZqfX06XtYcWhv5C9joJA_frAQy1Y0";

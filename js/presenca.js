@@ -70,8 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!saved) throw new Error();
       state.saved = { guestName, attending: state.attending, companions };
       state.name = guestName; state.companions = companions;
-    } catch {
-      state.error = "Não foi possível salvar sua resposta. Tente novamente.";
+    } catch (error) {
+      state.error = dbMessage(error, "Não foi possível salvar sua resposta. Tente novamente.");
     }
     state.busy = false; render();
   });

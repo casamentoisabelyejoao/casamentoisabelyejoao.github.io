@@ -61,8 +61,26 @@ async function rpc(name, params = {}) {
     headers: { apikey: window.SUPABASE_KEY, "Content-Type": "application/json" },
     body: JSON.stringify(params),
   });
-  if (!response.ok) throw new Error(`Erro ${response.status}`);
+  if (!response.ok) {
+    let code = "";
+    try { code = (await response.json()).message || ""; } catch { /* resposta sem corpo */ }
+    const error = new Error(`Erro ${response.status}`);
+    error.code = code;
+    throw error;
+  }
   return response.json();
+}
+
+// Mensagens amigáveis para os avisos que o banco pode devolver.
+const DB_MESSAGES = {
+  limite_presentes: "Você escolheu muitos presentes em pouco tempo. Tente de novo mais tarde.",
+  limite_respostas: "Muitas respostas foram enviadas desta conexão. Tente de novo mais tarde.",
+  nome_invalido: "Escreva seu nome completo.",
+  acompanhante_invalido: "Preencha o nome de cada acompanhante ou remova o campo vazio.",
+  acompanhantes_demais: "O limite é de 10 acompanhantes por resposta.",
+};
+function dbMessage(error, fallback) {
+  return DB_MESSAGES[error?.code] ?? fallback;
 }
 
 function newToken() {

@@ -125,7 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
         delete next[pending.id];
         message = "Sua escolha foi cancelada.";
       } else {
-        const selected = await rpc("select_wedding_gift", { p_gift_id: pending.id, p_token: token, p_guest_name: guestName }).catch(() => { throw new Error("Não foi possível salvar sua escolha. Tente novamente."); });
+        const selected = await rpc("select_wedding_gift", { p_gift_id: pending.id, p_token: token, p_guest_name: guestName }).catch(error => { throw new Error(dbMessage(error, "Não foi possível salvar sua escolha. Tente novamente.")); });
         if (selected === true) { next[pending.id] = token; message = "Presente escolhido com carinho. Obrigado!"; }
         else message = "Este presente acabou de ser escolhido por outro convidado.";
       }

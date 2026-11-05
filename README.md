@@ -10,7 +10,11 @@ Recriação do site original (feito no Lovable) como site estático: só HTML, C
 - `admin.html` — lista das confirmações (só para a conta administradora)
 
 ## Banco de dados
-Usa o mesmo banco Supabase do site original (`js/config.js`), então presentes escolhidos e presenças confirmadas continuam os mesmos.
+Banco próprio no Supabase (`js/config.js`). Toda a estrutura e as regras de segurança estão em `supabase/setup.sql`: basta colar no SQL Editor do Supabase e clicar em Run.
+
+- Os convidados só conseguem ver quais presentes já foram escolhidos, nunca por quem.
+- Cada convidado só vê a própria confirmação de presença.
+- Limites contra abuso: 5 presentes e 10 respostas novas por conexão a cada hora.
 
 ## Rodar no computador
 ```bash
@@ -22,5 +26,9 @@ Depois abra http://localhost:5173
 Envie a pasta inteira para qualquer hospedagem de sites estáticos (Netlify, Vercel, GitHub Pages, Cloudflare Pages).
 
 ## Área admin
-O login de administrador deste banco funciona só pelo serviço de login do Lovable, que existe apenas no site hospedado pelo Lovable. Por isso a lista de confirmações continua sendo consultada na página `/admin` do site no Lovable (os dois sites usam o mesmo banco, então todas as respostas aparecem lá).
-Para a página `admin.html` deste site mostrar um botão direto para lá, preencha `window.ADMIN_URL` em `js/config.js`.
+`admin.html`: login por link enviado ao e-mail. Só entram os e-mails cadastrados na tabela `admin_emails`.
+Para adicionar um admin, rode no SQL Editor:
+```sql
+insert into public.admin_emails (email) values ('email@exemplo.com');
+```
+No plano grátis, o Supabase só envia o e-mail de login para membros da equipe do projeto (Organization → Team).

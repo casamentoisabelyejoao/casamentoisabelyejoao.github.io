@@ -196,3 +196,13 @@ em.amp { display: inline-block; font-size: .9em; }
 .admin-table th, .admin-table td { text-align: left; padding: 16px 12px; border-bottom: 1px solid var(--border); }
 .admin-table td:first-child { overflow-wrap: anywhere; }
 @media(max-width:700px) { .admin-summary { gap: 12px; }.admin-summary span { font-size: 11px; }.admin-table th,.admin-table td { padding: 12px 6px; } }
+
+/* Área admin própria */
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.admin-login-title { font-size: 38px; text-align: center; margin-bottom: 28px; }
+.admin-login-form > button { width: 100%; }
+.admin-summary-2 { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.admin-tabs { border-bottom: 1px solid var(--border); padding-bottom: 20px; }
+.admin-row-action { font-size: 12px; font-weight: 600; color: var(--primary); border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent); border-radius: 999px; padding: 6px 12px; white-space: nowrap; transition: background-color .2s, color .2s; }
+.admin-row-action:hover, .admin-row-action:focus-visible { background: var(--primary); color: var(--primary-foreground); outline: none; }
+.selection-dialog .selection-actions .hbtn { flex: 1; }
