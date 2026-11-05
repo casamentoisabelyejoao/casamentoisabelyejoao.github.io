@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Isabely &amp; João Victor — Nosso casamento · 29 de janeiro de 2027</title>
+  <meta name="description" content="Isabely &amp; João Victor convidam você para seu casamento, sexta-feira, 29 de janeiro de 2027, às 16h, no Espaço Tropical em Barra dos Coqueiros.">
+  <meta property="og:title" content="Isabely &amp; João Victor — Nosso casamento">
+  <meta property="og:description" content="Uma sexta-feira especial: 29 de janeiro de 2027, às 16h. Confira o convite, o local e a lista de presentes.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home">
+<div class="wedding-site">
+  <main>
+    <section class="invitation-scroll" aria-label="Convite de casamento">
+      <div class="invitation-stage">
+        <div class="invitation-heading">
+          <span class="eyebrow">Um novo capítulo, juntos</span>
+          <h1>Isabely <em class="amp">&amp;</em> João Victor</h1>
+          <p>29 de janeiro de 2027 <span>·</span> Sexta-feira</p>
+        </div>
+        <div class="envelope-float">
+          <div class="envelope">
+            <div class="envelope-back"></div>
+            <article class="invitation-letter">
+              <img src="assets/wedding-florals.jpg" alt="Papel artesanal com flores em terracota e folhas de oliveira" width="1024" height="1536">
+              <div class="letter-copy">
+                <span class="letter-monogram">I <em class="amp">&amp;</em> V</span>
+                <p class="letter-intro">Com gratidão a Deus e alegria no coração, convidamos você para celebrar conosco o nosso casamento e o início de uma nova história a dois</p>
+                <p class="letter-motto">Dois corações,<br>um lindo destino.</p>
+                <h2>Isabely <em class="amp">&amp;</em> João Victor</h2>
+                <div class="letter-date"><span>JAN</span><strong>29</strong><span>2027</span></div>
+                <p class="letter-time">Sexta-feira · às 16h</p>
+                <p class="letter-venue">Espaço Tropical<br><span>Barra dos Coqueiros · SE</span></p>
+                <p class="letter-closing">Será uma alegria ter você conosco neste dia tão especial</p>
+              </div>
+            </article>
+            <div class="envelope-side envelope-left"></div>
+            <div class="envelope-side envelope-right"></div>
+            <div class="envelope-bottom"></div>
+            <div class="ribbon ribbon-horizontal"></div>
+            <div class="ribbon ribbon-vertical"></div>
+            <div class="wax-seal" aria-hidden="true"><span>I&amp;V</span></div>
+          </div>
+        </div>
+        <div class="invitation-caption"><span>Uma sexta-feira para guardar no coração</span><span class="scroll-mark" aria-hidden="true">↓</span></div>
+      </div>
+    </section>
+
+    <section class="celebration-section section-wrap">
+      <div class="section-heading"><span class="eyebrow">O nosso sim</span><h2>Uma data.<br><em>Uma vida inteira.</em></h2><p>Queremos viver esse momento ao lado de quem faz parte da nossa história.</p></div>
+      <div class="event-facts">
+        <div><i data-icon="calendar" data-stroke="1.3"></i><span class="eyebrow">Reserve a data</span><h3>29 de janeiro</h3><p class="friday">Sexta-feira · 2027</p><p>Organize-se para celebrar com a gente.</p></div>
+        <div><i data-icon="mapPin" data-stroke="1.3"></i><span class="eyebrow">O encontro</span><h3>Espaço Tropical</h3><p>Às 16h · Rua Limoeiro, 30<br>Barra dos Coqueiros</p><a class="hbtn mt-3 maps-link" target="_blank" rel="noopener noreferrer" data-hover="Ver localização" data-hover-icon="arrowUpRight"></a></div>
+      </div>
+    </section>
+
+    <section class="rsvp-band"><span class="eyebrow">Sua presença é especial</span><h2>Esperamos por você.</h2><p>Confirmação de presença até <strong>10 de dezembro.</strong></p><a href="presenca.html" class="hbtn rsvp-highlight" data-hover="Confirmar presença"></a></section>
+
+    <section class="section-wrap explore-section">
+      <a href="orientacoes.html" class="explore-link ihover"><i data-icon="calendar" data-size="28" data-stroke="1.2"></i><div><span class="eyebrow">Cada detalhe importa</span><h2>O grande dia</h2><p>Horários, first look e informações para a celebração.</p></div><i data-icon="arrowUpRight"></i></a>
+      <a href="presentes.html" class="explore-link ihover"><i data-icon="gift" data-size="28" data-stroke="1.2"></i><div><span class="eyebrow">Nosso novo lar</span><h2>Lista de presentes</h2><p>Ideias escolhidas com carinho para a nossa casa.</p></div><i data-icon="arrowUpRight"></i></a>
+    </section>
+  </main>
+</div>
+<script src="js/wedding-data.js"></script>
+<script src="js/common.js"></script>
+<script>
+  document.querySelectorAll(".maps-link").forEach(a => a.href = WEDDING.wedding.mapsUrl);
+
+  // Envelope: a abertura e a inclinação 3D acompanham a rolagem.
+  (function () {
+    const section = document.querySelector(".invitation-scroll");
+    const stage = document.querySelector(".invitation-stage");
+    let frame = 0;
+    function update() {
+      frame = 0;
+      const rect = section.getBoundingClientRect();
+      const distance = Math.max(1, section.offsetHeight - window.innerHeight);
+      const progress = Math.max(0, Math.min(1, -rect.top / distance));
+      // Fica reto cedo (por volta de 70% da rolagem) e se mantém assim.
+      const straighten = Math.min(1, progress / 0.7);
+      stage.style.setProperty("--opening", String(progress));
+      stage.style.setProperty("--tilt", String(1 - Math.pow(1 - straighten, 2)));
+    }
+    function requestUpdate() { if (!frame) frame = requestAnimationFrame(update); }
+    update();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+  })();
+</script>
+</body>
+</html>

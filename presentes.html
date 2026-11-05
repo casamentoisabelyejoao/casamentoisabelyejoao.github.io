@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lista de presentes — Isabely &amp; João Victor</title>
+  <meta name="description" content="Lista de presentes de casamento de Isabely &amp; João Victor: eletrodomésticos, utensílios de cozinha, mesa, cama e banho para o novo lar.">
+  <meta property="og:title" content="Lista de presentes — Isabely &amp; João Victor">
+  <meta property="og:description" content="Presentes escolhidos com carinho para o nosso novo lar. Preferência por preto nos itens em que a cor se aplica.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="presentes">
+<div class="wedding-site">
+  <main class="inner-page section-wrap gift-page">
+    <div class="page-heading"><span class="eyebrow">Um lar para a nossa história</span><h1>Lista de <em>presentes</em></h1><p>Seu carinho já é um presente. Estas são algumas ideias para o nosso novo lar.</p><span class="color-preference"><span aria-hidden="true"></span>Cor de preferência: preto</span></div>
+    <div class="gift-controls"><div class="gift-tabs" role="group" aria-label="Categorias de presentes"></div><label class="gift-search"><i data-icon="search" data-size="17"></i><input id="gift-search" placeholder="Buscar presente" aria-label="Buscar presente"></label></div>
+    <div class="gift-count" id="gift-count" aria-live="polite"></div>
+    <p class="gift-count">Imagens ilustrativas</p>
+    <p class="gift-feedback" id="page-feedback" role="status" hidden></p>
+    <div class="gift-grid" id="gift-grid"></div>
+    <p class="empty-gifts" id="gift-empty" hidden>Nenhum presente encontrado.</p>
+  </main>
+</div>
+<div id="selection" hidden>
+  <div class="selection-overlay" data-close></div>
+  <div class="selection-dialog" role="dialog" aria-modal="true" aria-labelledby="selection-title" aria-describedby="selection-desc">
+    <h2 id="selection-title"></h2>
+    <p id="selection-desc"></p>
+    <label class="gift-name-field" id="selection-name-field">Seu nome
+      <input id="selection-name" placeholder="Ex.: Maria Silva" maxlength="80">
+    </label>
+    <p class="gift-feedback" id="dialog-feedback" role="status" hidden></p>
+    <div class="selection-actions"><button class="hbtn" id="selection-confirm"></button><button class="hbtn" id="selection-back" data-close></button></div>
+  </div>
+</div>
+<script src="js/config.js"></script>
+<script src="js/wedding-data.js"></script>
+<script src="js/common.js"></script>
+<script src="js/presentes.js"></script>
+</body>
+</html>
