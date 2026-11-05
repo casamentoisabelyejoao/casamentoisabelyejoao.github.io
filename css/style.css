@@ -105,7 +105,7 @@ em.amp { display: inline-block; font-size: .9em; }
 /* Expanded invitation copy, without changing scroll transforms. */
 .invitation-heading { width: 100%; padding-inline: 16px; }
 .invitation-heading h1 { font-size: 62px; }
-.letter-copy { padding: 16px 20px; justify-content: center; gap: 7px; background: var(--letter-wash); margin: 16px; height: calc(100% - 32px); border-radius: 2px; box-shadow: 0 6px 16px #432b201f; }
+.letter-copy { padding: 16px 20px; justify-content: center; text-shadow: 0 0 8px #fbf8f2, 0 0 2px #fbf8f2; gap: 7px; margin: 16px; height: calc(100% - 32px); }
 .letter-monogram { margin-bottom: 0; font-size: 24px; }
 .letter-copy > p.letter-intro { font-family: var(--font-sans); font-size: 9px; line-height: 1.5; margin: 0; }
 .letter-copy > p.letter-motto { font-size: 17px; margin: 0; }
@@ -206,3 +206,9 @@ em.amp { display: inline-block; font-size: .9em; }
 .admin-row-action { font-size: 12px; font-weight: 600; color: var(--primary); border: 1px solid color-mix(in srgb, var(--primary) 40%, transparent); border-radius: 999px; padding: 6px 12px; white-space: nowrap; transition: background-color .2s, color .2s; }
 .admin-row-action:hover, .admin-row-action:focus-visible { background: var(--primary); color: var(--primary-foreground); outline: none; }
 .selection-dialog .selection-actions .hbtn { flex: 1; }
+
+/* Convite sem o quadro branco: o texto fica direto sobre o papel da foto.
+   A foto é ampliada um pouco e o texto sobe, para não passar por cima das flores dos cantos. */
+.invitation-letter img { transform: scale(1.15); }
+.letter-copy { padding-bottom: 34%; gap: 5px; }
+.letter-copy > p.letter-closing { max-width: 210px; }
