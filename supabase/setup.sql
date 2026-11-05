@@ -261,5 +261,7 @@ to authenticated;
 -- Admins: troque/adicione os e-mails de quem pode ver as confirmações
 -- ---------------------------------------------------------------------
 insert into public.admin_emails (email) values
-  ('andreyoliveirat123@gmail.com')
+  ('andreyoliveirat123@gmail.com'),
+  ('joaovictor2005aj@gmail.com'),
+  ('isammsreserva@gmail.com')
 on conflict do nothing;
