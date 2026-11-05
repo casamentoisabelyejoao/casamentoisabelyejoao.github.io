@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const state = {
     user: null, ready: false,
-    email: "", sending: false, sent: false, loginError: "",
+    email: "", sending: false, sent: false, loginError: "", code: "", verifying: false,
     loading: false, loadError: false, allowed: false,
     attendance: [], gifts: [],
     filter: "Todos", tab: "presencas",
@@ -32,9 +32,15 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------- Telas ----------
   function loginView() {
     if (state.sent) {
-      return `<section class="attendance-result">${icon("check", 32, 1.3)}<h2>Confira seu e-mail</h2>
-        <p>Enviamos um link de acesso para <strong>${escapeHtml(state.email)}</strong>. Abra o e-mail e clique no link para entrar. Se não chegar em alguns minutos, olhe a caixa de spam.</p>
-        ${hoverButton({ text: "Usar outro e-mail", attrs: 'type="button" data-action="restart"' })}</section>`;
+      return `<form class="attendance-form admin-login-form admin-code-form" novalidate>
+        <h2 class="admin-login-title">Confira seu e-mail</h2>
+        <p class="attendance-companion-note">Enviamos um e-mail para <strong>${escapeHtml(state.email)}</strong>. Se não chegar em alguns minutos, olhe a caixa de spam.</p>
+        <label class="attendance-name">Digite o código do e-mail<input name="code" inputmode="numeric" autocomplete="one-time-code" maxlength="10" value="${escapeHtml(state.code)}"${state.verifying ? " disabled" : ""}></label>
+        <p class="attendance-companion-note">Ou clique no link do e-mail. Se abrir o link neste mesmo navegador, esta página entra sozinha.</p>
+        ${state.loginError ? `<p class="gift-feedback" role="alert">${escapeHtml(state.loginError)}</p>` : ""}
+        ${hoverButton({ text: state.verifying ? "Entrando…" : "Entrar", attrs: `type="submit"${state.verifying ? " disabled" : ""}` })}
+        <div class="admin-login">${hoverButton({ text: "Usar outro e-mail ou reenviar", attrs: 'type="button" data-action="restart"' })}</div>
+      </form>`;
     }
     return `<form class="attendance-form admin-login-form" novalidate>
       <h2 class="admin-login-title">Acesso do administrador</h2>
@@ -150,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // ---------- Eventos ----------
   root.addEventListener("submit", async event => {
     event.preventDefault();
+    if (state.sent) { verifyCode(String(new FormData(event.target).get("code") || "")); return; }
     const email = String(new FormData(event.target).get("email") || "").trim().toLowerCase();
     state.email = email;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { state.loginError = "Digite um e-mail válido."; render(); return; }
@@ -165,7 +172,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const el = event.target.closest("button, [data-action]");
     if (!el || el.disabled) return;
     const action = el.dataset.action;
-    if (action === "restart") { state.sent = false; render(); }
+    if (action === "restart") { state.sent = false; state.code = ""; state.loginError = ""; render(); }
     if (action === "refresh") { state.notice = ""; load(); }
     if (action === "signout") { await client.auth.signOut(); }
     if (action === "cancel-confirm" && !state.busy) { state.confirm = null; render(); }
@@ -178,6 +185,36 @@ document.addEventListener("DOMContentLoaded", () => {
   document.addEventListener("keydown", event => {
     if (event.key === "Escape" && state.confirm && !state.busy) { state.confirm = null; render(); }
   });
+
+  // Entrar digitando o código que veio no e-mail (funciona mesmo se o e-mail for aberto no celular).
+  async function verifyCode(raw) {
+    const token = raw.replace(/\D/g, "");
+    state.code = token;
+    if (token.length < 6) { state.loginError = "Digite o código de números que veio no e-mail."; render(); return; }
+    state.verifying = true; state.loginError = ""; render();
+    const { error } = await client.auth.verifyOtp({ email: state.email, token, type: "email" });
+    state.verifying = false;
+    if (error) {
+      state.loginError = error.status === 429 ? "Muitas tentativas. Espere alguns minutos e tente de novo."
+        : "Código inválido ou expirado. Confira o código ou peça um novo e-mail.";
+      render();
+    }
+    // Se deu certo, onAuthStateChange abre a área admin.
+  }
+
+  // Se o link do e-mail for aberto em outra aba deste navegador, esta página também entra.
+  window.addEventListener("storage", event => {
+    if (!state.user && event.key && event.key.includes("-auth-token") && event.newValue) location.reload();
+  });
+
+  // Link expirado ou já usado: o Supabase volta para cá com o erro no endereço.
+  const hashParams = new URLSearchParams(location.hash.slice(1));
+  if (hashParams.get("error")) {
+    state.loginError = hashParams.get("error_code") === "otp_expired"
+      ? "Esse link de acesso expirou ou já foi usado. Peça um novo e-mail abaixo."
+      : "Não foi possível entrar com esse link. Peça um novo e-mail abaixo.";
+    history.replaceState(null, "", location.pathname);
+  }
 
   client.auth.onAuthStateChange((_event, session) => {
     const user = session?.user ?? null;
