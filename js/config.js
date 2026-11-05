@@ -5,4 +5,4 @@ window.SUPABASE_KEY = "sb_publishable_vWnjA9gwEQ5Ks42hOaqFWw_gXUj5lFJ";
 
 // Endereço da área admin do site no Lovable (ex.: "https://seu-site.lovable.app/admin").
 // Quando preenchido, a página admin.html mostra um botão que leva até lá.
-window.ADMIN_URL = "";
+window.ADMIN_URL = "https://isabelyexavier.lovable.app/admin";
